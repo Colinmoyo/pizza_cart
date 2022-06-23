@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <title>Perfect Pizza</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg"></div>
+   <div class="bg bg2"></div>
+  <div class="bg bg3"></div>
+ 
+
+    <div class="container" x-data="{showCart:false
+            ,smallQty:0,
+            smallTotal:0,
+            mediumQty: 0,
+            mediumTotal: 0.00,
+            largeQty: 0,
+            largeTotal : 0,
+            payNow : false,
+            paymentAmount : 0,
+            paymentMessage : '',
+
+            buySmall(){
+                   this.smallTotal+=67.90;
+                   this.smallQty+=1
+            },
+            clearSmall(){
+                if (this.smallQty > 0 ){
+                    this.smallTotal-=67.90;
+                    this.smallQty-=1
+                }
+                   
+            },
+            buyMedium(){
+                this.mediumTotal+=100.90;
+                this.mediumQty+=1
+            },
+           clearMedium(){
+               if (this.mediumQty > 0 ){
+                this.mediumTotal-=100.90;
+                this.mediumQty-=1
+               }
+                
+            },
+            buyLarge(){
+                this.largeTotal+=152.90;
+                this.largeQty+=1
+            },
+           clearLarge(){
+               if (this.largeQty > 0){
+                this.largeTotal-=152.90;
+                this.largeQty-=1
+               }
+               
+            },
+            clearCart(){
+            this.smallQty = 0;
+            this.smallTotal = 0;
+            this.mediumQty = 0;
+            this.mediumTotal = 0.00;
+            this.largeQty = 0;
+            this.largeTotal = 0
+            },
+            makePayment() {
+                
+               if (!this.paymentAmount ){
+                this.paymentMessage ='No Amount entered!'
+               }
+
+              else if (this.paymentAmount >= this.cartTotal()){
+                this.paymentMessage ='Enjoy your pizzas!'
+                
+                setTimeout(() => {
+                this.clearCart()
+                this.payNow = false;
+               },3000);
+            
+               } else {
+                this.paymentMessage ='Sorry - that is not enough money!'
+               }
+               
+            },
+            cartTotal(){
+                return this.smallTotal + this.mediumTotal + this.largeTotal;
+            },
+            totalQty(){
+                 return this.smallQty + this.mediumQty + this.largeQty;
+            }
+        
+        }">
+           <div class="header">
+               <div class="f3 header" x-show="!showCart">
+                  
+                
+             <div class="f1 header  ">
+                 <button x-on:click="showCart= true" x-show="!showCart">
+                    <img src="takeaway.png" width="20" alt=""> Shopping Cart
+                    <strong x-show="totalQty() > 0">
+                        <span x-text="totalQty()">
+                        </span> Pizzas
+                    </strong>
+                    </button>
+               </div>
+
+            </div>
+
+        <div class="cart-box">
+            <div class="cart" x-show="showCart">
+                <div>
+                      <a href="">Close</a>
+                </div>
+                <div class= "">
+				<button x-on:click="showCart=false"><img src="takeaway.png" width="30" alt="">Close Cart</button>	
+				</div>
+                
+
+                <!-- <div class="">
+                       <h2>Cart<img src="takeaway.gif" width="30" alt=""></h2>
+                     </div> -->
+
+                <table>
+                    <tr x-show="smallQty > 0" x-show="smallQty > 0">
+                        <td>
+                            Small Pizza 
+                        </td>
+                        <td>
+                            <span x-text="smallQty"></span>
+                            <button x-on:click="buySmall()" x-show="smallQty > 0">+</button>
+                            <button x-on:click="clearSmall()" x-show="smallQty > 0">-</button>
+                        </td>
+                        <td>
+                            R<span x-text="smallTotal.toFixed(2)"></span>
+                        </td>
+                    </tr>
+                    <tr x-show="mediumQty > 0">
+                        <td>
+                            Medium Pizza 
+                        </td>
+                        <td>
+                            <span x-text="mediumQty"></span>
+                            <button x-on:click="buyMedium()" x-show="mediumQty > 0">+</button>
+                            <button x-on:click="clearMedium()" x-show="mediumQty > 0">-</button>
+                        </td>
+                        <td>
+                            R<span x-text="mediumTotal.toFixed(2)"></span>
+                        </td>
+                    </tr>
+                    <tr x-show="largeQty > 0">
+                        <td>
+                            Large Pizza 
+                        </td>
+                        <td>
+                            <span x-text="largeQty"></span>
+                            <button x-on:click="buyLarge()" x-show="largeQty > 0">+</button>
+                            <button x-on:click="clearLarge()" x-show="largeQty > 0">-</button>
+                        </td>
+                        <td>
+                            R<span x-text="largeTotal.toFixed(2)"></span>
+                        </td>
+                    </tr>
+                    <tr x-show=" cartTotal().toFixed(2)>0">
+                        <td colspan="2">Total</td>
+                        <td>
+
+                            R<span x-text="cartTotal().toFixed(2)">
+
+                            </span>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div x-show="payNow">
+                                <div class="message" x-text="paymentMessage"></div>
+                                <div>
+                                    <label for="">Payment Amount</label>
+                                    <input class="input" type="number" placeholder="Payment Amount"
+                                        x-model="paymentAmount" width=" 50">
+                                    <button x-on:click="makePayment()" class="btn">
+                                        <img src="checkout.png" width="20" alt="">
+                                        Pay Now</button>
+                                </div>
+
+
+                            </div>
+
+                        </td>
+                        <td>
+                            <button x-show="!payNow" x-on:click="payNow =true" x-show class="btn">
+                                <img src="pay.webp" width="20" alt="">
+                                Checkout</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+    <div class="container">
+        <h1>Perfect Pizza</h1>
+
+        <div class="pizzas">
+
+
+
+            <div class="pizza small_pizza">
+
+                <div>
+                    <h2>Small Pizza</h2>
+                </div>
+                <img src="https://user-images.githubusercontent.com/34037/167313920-09aeb40f-9952-439b-8e54-a04c02caa427.png"
+                    width="150">
+                <div>
+                    <h3> R67.90</h3>
+                </div>
+                <button class="buybtn" x-on:click="buySmall()">
+                    <img src="takeaway.png" width="20" alt="">Buy/Add to Cart</button>
+                <div>
+                    
+                </div>
+                <div>
+                    Traditional pan baked 2 x Small Sweet and Sour Rib Pizzas with maximum of 3 toppings, 1 meat
+                    topping, 3
+                    or
+                    less other toppings
+                </div>
+            </div>
+
+
+
+
+            <div class="pizza medium_pizza">
+
+                <h2>Medium Pizza</h2>
+                <img src="https://user-images.githubusercontent.com/34037/167314003-8ded573d-4bb2-447f-b27c-5545631b1904.png"
+                    width="150">
+                <h3>R100.90</h3>
+                <button class="buy btn" x-on:click="buyMedium()">
+                    <img src="takeaway.png" width="20" alt="">Buy/Add to Cart</button>
+
+                <div>
+                    Traditional pan baked 2 x Medium Sweet and Sour Rib Pizzas with maximum of 3 toppings, 2 or less
+                    meat
+                    toppings,
+                    3 or less other toppings
+
+
+                </div>
+            </div>
+
+            <div class="pizza large_pizza">
+                <h2>Large Pizza</h2>
+                <img src="https://user-images.githubusercontent.com/34037/167314003-8ded573d-4bb2-447f-b27c-5545631b1904.png"
+                    width="150">
+                <h3>R152.90</h3>
+                <button class="buy btn" x-on:click="buyLarge()">
+                    <img src="takeaway.png" width="20" alt="">Buy/Add to Cart</button>
+
+                <div>
+                    Traditional pan baked 2 x Large Sweet and Sour Rib Pizzas with maximum of 3 toppings, 2 or less meat
+                    toppings, 3
+                    or less other toppings
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="contact_us">
+
+
+        <div>
+            <h2>Contact Details</h2>
+
+            <p>Contact us at : 072 018 4321</p>
+            <p>email : info@perfectpizza.co.za</p>   
+           <p>Twitter : @perfect_pizza</p> 
+         <p>Facebook : Perfect Pizza</p>   
+        </div>
+
+        <div class="address">
+         <p><h3>Address:</h3></p>   
+           <p>Pizza Place</p> 
+          <p> 13 Dough Road</p>  
+           <p>Base Town</p> 
+        </div>
+
+
+    </div>
+
+
+
+
+</body>
+
+</html>
