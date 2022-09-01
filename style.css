@@ -6,7 +6,7 @@ body {
 }
 
 .pizzas {
-    display: flex;
+    display: flexbox;
 }
 
 .pizza {
@@ -22,6 +22,7 @@ body {
 
 .small_pizza {
     background-color: cornflowerblue;
+    
 
 }
 
@@ -81,7 +82,7 @@ margin-left: 50%;}
     /* padding: 1em; */
     width: 100%;
     /* margin-top: -10em; */
-    /* border-radius-bottom: 1em; */
+    border-top-left-radius: 1em; 
 }
 }
 table {
@@ -112,7 +113,8 @@ td {
 .message{
     padding: 1em;
     margin: 1em;
-    background-color: orange;
+    background-color: turquoise;
+    border-style: dashed;
 }
 .header {
     padding: 1em;
@@ -139,7 +141,7 @@ td {
     width: 50%;
     margin-top: -1cm;
     margin-right: 10%;
-    border-radius: 0.5em;
+    border-radius: 1em;
     border: 1px solid black;
 }
 html {
@@ -158,7 +160,7 @@ html {
   }
   
   .content {
-    background-color:rgba(255,255,255,.8);
+    background-color:rgba(80, 12, 12, 0.8);
     border-radius:.25em;
     box-shadow:0 0 .25em rgba(0,0,0,.25);
     box-sizing:border-box;
@@ -172,6 +174,7 @@ html {
   
   h1 {
     font-family:monospace;
+    font size: 16p;
   }
   
   @keyframes slide {

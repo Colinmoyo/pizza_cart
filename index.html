@@ -6,6 +6,52 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="pizza-cart-api.js"></script>
+
+    <script>
+        axios.
+               get('https://pizza-cart-api.herokuapp.com/api/pizzas' )
+               .then ((result) => {
+                //console.log(result.data);
+                this.pizzas = result.data.pizzas
+               })
+            
+                
+               
+            </script>
+            
+</head>
+<body>
+
+    <div x-data="pizzaCartWithAPIWidget" >
+
+        <div x-text="message" ></div>
+
+        <h2>Available Pizzas</h2>
+
+        <strong x-text="pizzas.length" ></strong>
+        
+<table>
+        <template x-for="pizza in pizzas" >
+
+            <tr>
+                <td x-text="pizza.flavour"></td>
+                <td x-text="pizza.size" ></td>
+                <td x-text="pizza.price"></td>
+                    <td>
+    
+                <button x-on:click="add(pizza)" >Buy</button>
+                </td>
+                </tr>
+        </template>
+    </table>
+
+    </div>
+</body>
+
+
+
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <title>Perfect Pizza</title>
     <link rel="stylesheet" href="style.css">
@@ -120,6 +166,7 @@
 				<button x-on:click="showCart=false"><img src="takeaway.png" width="30" alt="">Close Cart</button>	
 				</div>
                 
+                
 
                 <!-- <div class="">
                        <h2>Cart<img src="takeaway.gif" width="30" alt=""></h2>
@@ -180,7 +227,7 @@
                             <div x-show="payNow">
                                 <div class="message" x-text="paymentMessage"></div>
                                 <div>
-                                    <label for="">Payment Amount</label>
+                                    <label for="">Payment Amount R</label>
                                     <input class="input" type="number" placeholder="Payment Amount"
                                         x-model="paymentAmount" width=" 50">
                                     <button x-on:click="makePayment()" class="btn">
@@ -224,19 +271,14 @@
                 <img src="https://user-images.githubusercontent.com/34037/167313920-09aeb40f-9952-439b-8e54-a04c02caa427.png"
                     width="150">
                 <div>
-                    <h3> R67.90</h3>
+                    
                 </div>
                 <button class="buybtn" x-on:click="buySmall()">
                     <img src="takeaway.png" width="20" alt="">Buy/Add to Cart</button>
                 <div>
                     
                 </div>
-                <div>
-                    Traditional pan baked 2 x Small Sweet and Sour Rib Pizzas with maximum of 3 toppings, 1 meat
-                    topping, 3
-                    or
-                    less other toppings
-                </div>
+                
             </div>
 
 
@@ -247,35 +289,22 @@
                 <h2>Medium Pizza</h2>
                 <img src="https://user-images.githubusercontent.com/34037/167314003-8ded573d-4bb2-447f-b27c-5545631b1904.png"
                     width="150">
-                <h3>R100.90</h3>
+                
                 <button class="buy btn" x-on:click="buyMedium()">
                     <img src="takeaway.png" width="20" alt="">Buy/Add to Cart</button>
 
-                <div>
-                    Traditional pan baked 2 x Medium Sweet and Sour Rib Pizzas with maximum of 3 toppings, 2 or less
-                    meat
-                    toppings,
-                    3 or less other toppings
-
-
-                </div>
+                
             </div>
 
             <div class="pizza large_pizza">
                 <h2>Large Pizza</h2>
                 <img src="https://user-images.githubusercontent.com/34037/167314003-8ded573d-4bb2-447f-b27c-5545631b1904.png"
                     width="150">
-                <h3>R152.90</h3>
+                
                 <button class="buy btn" x-on:click="buyLarge()">
                     <img src="takeaway.png" width="20" alt="">Buy/Add to Cart</button>
 
-                <div>
-                    Traditional pan baked 2 x Large Sweet and Sour Rib Pizzas with maximum of 3 toppings, 2 or less meat
-                    toppings, 3
-                    or less other toppings
-
-
-                </div>
+                
             </div>
         </div>
     </div>
@@ -304,6 +333,7 @@
 
 
     </div>
+    
 
 
 
